@@ -10,9 +10,9 @@
 
 ## Important Commits
 
-- Commit hash: **To be added after committing and pushing the Week 10 work.**
-- Description: Add the AI Financial Assistant project proposal and Week 10 progress report.
-- Link: **To be added after pushing to GitHub.**
+- Commit hash: 9dc712b
+- Description: Completed the AI Financial Assistant project proposal and Week 10 progress report.
+- Link: https://github.com/RusalnMansurov/css4007-ai-agents-final-MansurovRuslan/commit/9dc712b
 
 ## Current Functionality
 
