@@ -10,13 +10,9 @@ Set up the Node.js development environment and installed the `openai` and `doten
 - Description: feat: add LLM client and first working model request
 - Link: https://github.com/RusalnMansurov/css4007-ai-agents-final-MansurovRuslan/commit/acd143a
 
-- Commit hash: <hash of the dependencies commit>
-- Description: chore: add openai and dotenv dependencies
-- Link: https://github.com/RusalnMansurov/css4007-ai-agents-final-MansurovRuslan/commit/<hash>
-
-- Commit hash: <hash of the README commit>
-- Description: docs: add setup instructions for Week 11
-- Link: https://github.com/RusalnMansurov/css4007-ai-agents-final-MansurovRuslan/commit/<hash>
+- Commit hash: 7b00b94
+- Description: docs: add setup instructions and week 11 report (README setup section, openai and dotenv dependencies with lockfile, week 11 report)
+- Link: https://github.com/RusalnMansurov/css4007-ai-agents-final-MansurovRuslan/commit/7b00b94
 
 ## Current Functionality
 
@@ -28,7 +24,7 @@ Dependency changes and the first test script were not committed right away. Russ
 
 ## Solutions
 
-Committed the files separately after checking `git status`. Verified that `.env` is ignored with `git check-ignore`. The garbled output is a console encoding issue, the model reply itself was correct.
+Checked `git status` to find the uncommitted files, committed the client and test script first, then the dependencies, README and report. Verified that `.env` is ignored with `git check-ignore`.
 
 ## What I Learned
 
