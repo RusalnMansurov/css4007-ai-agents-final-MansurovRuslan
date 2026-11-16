@@ -1029,3 +1029,28 @@ A-level projects add two further expectations:
 The objective is not to reward the largest application or the most complicated framework.
 
 The objective is to develop students who can design, implement, evaluate, and understand useful AI systems.
+
+## AI Financial Assistant: Setup (Week 11)
+
+Personal budget assistant (level C) built on Node.js and the OpenAI API.
+
+### Requirements
+- Node.js 22 or newer
+- An OpenAI API key
+
+### Installation
+1. Clone the repository and install dependencies:
+   npm install
+2. Copy `.env.example` to `.env` and fill in your values:
+   OPENAI_API_KEY=your_key_here
+   MODEL_NAME=your_model_name
+   The `.env` file is listed in `.gitignore` and must never be committed.
+
+### Checking the LLM connection
+node test-llm.mjs
+
+The script sends a first request through `src/model-client.mjs` and prints the model's reply.
+
+### Current status
+- Done: LLM client (`src/model-client.mjs`) and the first working model request.
+- Planned: finance functions (Week 12), tool selection by the LLM (Week 13).

@@ -12,5 +12,9 @@
     "report": "node scripts/validate-weekly-report.mjs",
     "activity": "node scripts/analyze-commits.mjs",
     "grade": "node scripts/evaluate-progress.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.10",
+    "openai": "^7.57.0"
   }
 }
