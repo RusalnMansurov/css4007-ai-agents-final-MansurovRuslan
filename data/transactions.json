@@ -1,0 +1,20 @@
+[
+  { "date": "2026-10-01", "description": "Salary", "category": "salary", "type": "income", "amount": 450000 },
+  { "date": "2026-10-03", "description": "Rent", "category": "housing", "type": "expense", "amount": 150000 },
+  { "date": "2026-10-05", "description": "Groceries", "category": "food", "type": "expense", "amount": 38000 },
+  { "date": "2026-10-08", "description": "Bus pass", "category": "transport", "type": "expense", "amount": 8000 },
+  { "date": "2026-10-12", "description": "Cinema", "category": "entertainment", "type": "expense", "amount": 6000 },
+  { "date": "2026-10-15", "description": "Freelance project", "category": "freelance", "type": "income", "amount": 60000 },
+  { "date": "2026-10-18", "description": "Groceries", "category": "food", "type": "expense", "amount": 42000 },
+  { "date": "2026-10-20", "description": "Internet and phone", "category": "utilities", "type": "expense", "amount": 9000 },
+  { "date": "2026-10-25", "description": "Restaurant", "category": "food", "type": "expense", "amount": 15000 },
+  { "date": "2026-10-28", "description": "Gym", "category": "health", "type": "expense", "amount": 12000 },
+  { "date": "2026-11-01", "description": "Salary", "category": "salary", "type": "income", "amount": 450000 },
+  { "date": "2026-11-03", "description": "Rent", "category": "housing", "type": "expense", "amount": 150000 },
+  { "date": "2026-11-04", "description": "Groceries", "category": "food", "type": "expense", "amount": 41000 },
+  { "date": "2026-11-06", "description": "Taxi", "category": "transport", "type": "expense", "amount": 7500 },
+  { "date": "2026-11-09", "description": "Online course", "category": "education", "type": "expense", "amount": 25000 },
+  { "date": "2026-11-11", "description": "Groceries", "category": "food", "type": "expense", "amount": 36000 },
+  { "date": "2026-11-14", "description": "Concert", "category": "entertainment", "type": "expense", "amount": 18000 },
+  { "date": "2026-11-15", "description": "Electricity", "category": "utilities", "type": "expense", "amount": 11000 }
+]
