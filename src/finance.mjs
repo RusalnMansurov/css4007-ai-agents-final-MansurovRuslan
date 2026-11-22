@@ -30,6 +30,26 @@ function checkDate(name, value) {
   }
 }
 
+const CURRENCY = "KZT";
+const round2 = (x) => Math.round((x + Number.EPSILON) * 100) / 100;
+
+function checkMonth(month) {
+  if (typeof month !== "string" || !/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
+    throw new ValidationError(
+      `month must be in YYYY-MM format, got: ${month}`
+    );
+  }
+}
+
+// null и undefined означают "лимит не задан"
+function checkLimit(value) {
+  if (value != null) {
+    if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+      throw new ValidationError("monthlyLimit must be a non-negative number");
+    }
+  }
+}
+
 export function validateTransactions(data) {
   if (!Array.isArray(data)) {
     throw new ValidationError("transactions must be an array");
@@ -98,4 +118,63 @@ export function getTransactions(
       (category == null || t.category === category) &&
       (type == null || t.type === type)
   );
+}
+
+// Соответствует analyze_expenses(start_date, end_date) из proposal
+export function analyzeExpenses(transactions, { startDate, endDate } = {}) {
+  const expenses = getTransactions(transactions, {
+    startDate,
+    endDate,
+    type: "expense",
+  });
+  const byCategory = {};
+  for (const t of expenses) {
+    byCategory[t.category] = (byCategory[t.category] ?? 0) + t.amount;
+  }
+  const categories = Object.entries(byCategory)
+    .map(([category, total]) => ({ category, total: round2(total) }))
+    .sort((a, b) => b.total - a.total);
+  return {
+    currency: CURRENCY,
+    startDate: startDate ?? null,
+    endDate: endDate ?? null,
+    totalExpenses: round2(categories.reduce((sum, c) => sum + c.total, 0)),
+    categories,
+    largestCategory: categories[0]?.category ?? null,
+  };
+}
+
+// Соответствует calculate_budget(month, monthly_limit=None) из proposal
+export function calculateBudget(transactions, { month, monthlyLimit } = {}) {
+  checkMonth(month);
+  checkLimit(monthlyLimit);
+
+  const [year, mon] = month.split("-").map(Number);
+  const lastDay = new Date(Date.UTC(year, mon, 0)).getUTCDate();
+  const rows = getTransactions(transactions, {
+    startDate: `${month}-01`,
+    endDate: `${month}-${String(lastDay).padStart(2, "0")}`,
+  });
+
+  const sum = (type) =>
+    rows.filter((t) => t.type === type).reduce((s, t) => s + t.amount, 0);
+  const income = round2(sum("income"));
+  const expenses = round2(sum("expense"));
+
+  const result = {
+    currency: CURRENCY,
+    month,
+    income,
+    expenses,
+    balance: round2(income - expenses),
+    monthlyLimit: monthlyLimit ?? null,
+  };
+
+  if (monthlyLimit != null) {
+    result.remainingLimit = round2(monthlyLimit - expenses);
+    result.overLimit = expenses > monthlyLimit;
+    result.limitUsedPercent =
+      monthlyLimit === 0 ? null : round2((expenses / monthlyLimit) * 100);
+  }
+  return result;
 }
