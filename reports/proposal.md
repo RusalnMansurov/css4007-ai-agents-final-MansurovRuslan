@@ -118,3 +118,16 @@ Record pass/fail results, fixes, and example traces in the final report. Starter
 
 ## AI Coding Assistant Disclosure (planned)
 ChatGPT may assist with planning, explanations, drafting code, and debugging. All generated code will be reviewed, executed, tested, and explained by the student. Actual assistance will be described in the final report.
+
+## Revisions
+
+### Revision 1 (2026-11-16, Week 12)
+
+The application is implemented in Node.js (ES modules, Node 22) instead of Python. The starter repository is Node-based, its test and validation scripts use `node --test`, and the `openai` SDK works well with it. The function design and the tool-using agent architecture are unchanged. The following proposal items are replaced accordingly:
+
+- **Data format:** `data/transactions.csv` is replaced by `data/transactions.json`. JSON keeps numbers typed, supports any text in descriptions, and needs no custom parser, so validation is simpler. The dataset content and purpose are unchanged.
+- **User interface:** the Streamlit UI is replaced by a command-line interface, because Streamlit is Python-only. The interface can be changed later without touching the agent logic.
+- **Validation:** Pydantic is replaced by hand-written validation functions that throw a `ValidationError`; tool argument schemas will be defined as JSON Schema for the OpenAI tool-calling API.
+- **Testing:** pytest is replaced by the built-in `node --test` runner with `node:assert`, using synthetic fixtures as planned.
+- **Arithmetic:** Python decimal arithmetic is replaced by JavaScript numbers with rounding to two decimals; all amounts are whole tenge, so precision is sufficient.
+- **Function names:** functions use camelCase (`getTransactions`, `analyzeExpenses`, `calculateBudget`, `planSavings`) following JavaScript conventions.
