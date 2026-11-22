@@ -1030,27 +1030,55 @@ The objective is not to reward the largest application or the most complicated f
 
 The objective is to develop students who can design, implement, evaluate, and understand useful AI systems.
 
-## AI Financial Assistant: Setup (Week 11)
+## AI Financial Assistant: Setup
 
-Personal budget assistant (level C) built on Node.js and the OpenAI API.
+Personal budget assistant (level C) built on Node.js and the OpenAI API. It uses synthetic data only and gives educational budgeting information, not financial advice.
 
 ### Requirements
 - Node.js 22 or newer
-- An OpenAI API key
+- An OpenAI API key (only needed for the LLM parts)
 
 ### Installation
 1. Clone the repository and install dependencies:
-   npm install
+
+```
+npm install
+```
+
 2. Copy `.env.example` to `.env` and fill in your values:
-   OPENAI_API_KEY=your_key_here
-   MODEL_NAME=your_model_name
-   The `.env` file is listed in `.gitignore` and must never be committed.
+
+```
+OPENAI_API_KEY=your_key_here
+MODEL_NAME=your_model_name
+```
+
+The `.env` file is listed in `.gitignore` and must never be committed.
 
 ### Checking the LLM connection
+
+```
 node test-llm.mjs
+```
 
 The script sends a first request through `src/model-client.mjs` and prints the model's reply.
 
+### Demo of the finance functions
+
+```
+npm run demo
+```
+
+Runs the finance functions on the sample data in `data/transactions.json` and prints their results. No API key is needed.
+
+### Tests
+
+```
+npm test
+```
+
+Runs the project tests (`tests/finance.test.mjs`, `tests/output-validation.test.mjs`) together with the starter utility tests.
+
 ### Current status
-- Done: LLM client (`src/model-client.mjs`) and the first working model request.
-- Planned: finance functions (Week 12), tool selection by the LLM (Week 13).
+- Done: LLM client and first model request (Week 11).
+- Done: finance functions `getTransactions`, `analyzeExpenses`, `calculateBudget`, `planSavings` with input and output validation and tests (Week 12).
+- Planned: tool selection by the LLM (Week 13), agent workflow and error handling (Week 14).
