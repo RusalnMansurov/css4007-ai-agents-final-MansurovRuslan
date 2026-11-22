@@ -8,6 +8,7 @@ import {
   getTransactions,
   analyzeExpenses,
   calculateBudget,
+  planSavings,
 } from "../src/finance.mjs";
 
 const SAMPLE = validateTransactions([
@@ -134,4 +135,33 @@ test("calculateBudget returns zeros for a month without transactions", () => {
   assert.equal(r.expenses, 0);
   assert.equal(r.balance, 0);
   assert.equal(r.limitUsedPercent, 0);
+});
+
+test("planSavings computes the monthly amount for a goal", () => {
+  const r = planSavings({ goalAmount: 600000, currentSavings: 120000, months: 6 });
+  assert.equal(r.currency, "KZT");
+  assert.equal(r.remaining, 480000);
+  assert.equal(r.monthlyRequired, 80000);
+  assert.equal(r.goalReached, false);
+});
+
+test("planSavings rounds the monthly amount to two decimals", () => {
+  const r = planSavings({ goalAmount: 100000, currentSavings: 0, months: 3 });
+  assert.equal(r.monthlyRequired, 33333.33);
+});
+
+test("planSavings reports a reached goal", () => {
+  const r = planSavings({ goalAmount: 100000, currentSavings: 150000, months: 4 });
+  assert.equal(r.remaining, 0);
+  assert.equal(r.monthlyRequired, 0);
+  assert.equal(r.goalReached, true);
+});
+
+test("planSavings rejects negative amounts, bad months and missing values", () => {
+  assert.throws(() => planSavings({ goalAmount: -1, currentSavings: 0, months: 3 }), ValidationError);
+  assert.throws(() => planSavings({ goalAmount: 1000, currentSavings: -5, months: 3 }), ValidationError);
+  assert.throws(() => planSavings({ goalAmount: 1000, currentSavings: 0, months: 0 }), ValidationError);
+  assert.throws(() => planSavings({ goalAmount: 1000, currentSavings: 0, months: 2.5 }), ValidationError);
+  assert.throws(() => planSavings({ goalAmount: "1000", currentSavings: 0, months: 3 }), ValidationError);
+  assert.throws(() => planSavings({ goalAmount: 1000, months: 3 }), ValidationError);
 });

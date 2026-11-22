@@ -50,6 +50,12 @@ function checkLimit(value) {
   }
 }
 
+function checkAmount(name, value) {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+    throw new ValidationError(`${name} must be a non-negative number`);
+  }
+}
+
 export function validateTransactions(data) {
   if (!Array.isArray(data)) {
     throw new ValidationError("transactions must be an array");
@@ -177,4 +183,24 @@ export function calculateBudget(transactions, { month, monthlyLimit } = {}) {
       monthlyLimit === 0 ? null : round2((expenses / monthlyLimit) * 100);
   }
   return result;
+}
+
+// Соответствует plan_savings(goal_amount, current_savings, months) из proposal.
+// Проценты и доходность не учитываются.
+export function planSavings({ goalAmount, currentSavings, months } = {}) {
+  checkAmount("goalAmount", goalAmount);
+  checkAmount("currentSavings", currentSavings);
+  if (!Number.isInteger(months) || months <= 0) {
+    throw new ValidationError("months must be a positive integer");
+  }
+  const remaining = Math.max(goalAmount - currentSavings, 0);
+  return {
+    currency: CURRENCY,
+    goalAmount,
+    currentSavings,
+    months,
+    remaining: round2(remaining),
+    monthlyRequired: round2(remaining / months),
+    goalReached: remaining === 0,
+  };
 }
